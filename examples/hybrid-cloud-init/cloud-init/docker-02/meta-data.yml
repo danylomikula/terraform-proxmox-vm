@@ -1,0 +1,2 @@
+#cloud-config
+local-hostname: docker-02-custom

@@ -1,0 +1,48 @@
+name: Pre-Commit
+
+on:
+  pull_request:
+    branches:
+      - main
+
+env:
+  TFLINT_VERSION: v0.60.0
+  TERRAFORM_DOCS_VERSION: v0.20.0
+
+jobs:
+  pre-commit:
+    name: Pre-Commit
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        terraform:
+          - "1.5.0" # min version from versions.tf
+          - "latest"
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v3
+        with:
+          terraform_version: ${{ matrix.terraform }}
+          terraform_wrapper: false
+
+      - name: Setup TFLint
+        uses: terraform-linters/setup-tflint@v6
+        with:
+          tflint_version: ${{ env.TFLINT_VERSION }}
+
+      - name: Setup terraform-docs
+        uses: jaxxstorm/action-install-gh-release@v2.1.0
+        with:
+          repo: terraform-docs/terraform-docs
+          tag: ${{ env.TERRAFORM_DOCS_VERSION }}
+
+      - name: Setup Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: "3.13"
+
+      - name: Run Pre-Commit
+        uses: pre-commit/action@v3.0.1
