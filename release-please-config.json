@@ -1,0 +1,9 @@
+{
+  "packages": {
+    ".": {
+      "release-type": "terraform-module",
+      "include-component-in-tag": false
+    }
+  },
+  "pull-request-footer": "📋 Changelog generated automatically"
+}

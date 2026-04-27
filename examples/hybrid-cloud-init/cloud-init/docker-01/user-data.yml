@@ -1,0 +1,28 @@
+#cloud-config
+manage_etc_hosts: true
+
+users:
+  - name: admin
+    groups: wheel
+    shell: /bin/bash
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    ssh_authorized_keys:
+      - {{ssh_public_key}}
+
+chpasswd:
+  expire: false
+  users:
+    - name: admin
+      password: admin
+      type: text
+
+ssh_pwauth: true
+
+packages:
+  - qemu-guest-agent
+  - curl
+  - vim
+  - iperf3
+
+runcmd:
+  - systemctl enable --now qemu-guest-agent
