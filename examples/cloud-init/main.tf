@@ -92,23 +92,3 @@ module "vm" {
     }
   }
 }
-
-output "vm_ids" {
-  value = module.vm.vm_ids
-}
-
-output "vm_ipv4" {
-  value = module.vm.vm_ipv4_addresses
-}
-
-output "ssh_key_files" {
-  value = module.vm.ssh_private_key_file_paths
-}
-
-output "ssh_connection" {
-  description = "SSH connection commands."
-  value = {
-    for name, path in module.vm.ssh_private_key_file_paths :
-    name => "ssh -i ${path} admin@10.20.0.20"
-  }
-}

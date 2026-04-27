@@ -169,35 +169,3 @@ module "vms" {
     }
   }
 }
-
-output "vm_ids" {
-  value = module.vms.vm_ids
-}
-
-output "vm_ipv4" {
-  value = module.vms.vm_ipv4_addresses
-}
-
-output "vms_by_node" {
-  value = module.vms.vms_by_node
-}
-
-output "vms_by_tag" {
-  value = module.vms.vms_by_tag
-}
-
-output "ssh_key_files" {
-  value = module.vms.ssh_private_key_file_paths
-}
-
-output "ssh_connection_commands" {
-  description = "SSH connection commands for each VM."
-  value = {
-    for name, path in module.vms.ssh_private_key_file_paths :
-    name => "ssh -i ${path} admin@<ip>"
-  }
-}
-
-output "downloaded_images" {
-  value = module.images.file_ids
-}

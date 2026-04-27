@@ -56,11 +56,3 @@ module "vm" {
     }
   }
 }
-
-output "vm_ids" {
-  value = module.vm.vm_ids
-}
-
-output "vm_ipv4" {
-  value = module.vm.vm_ipv4_addresses
-}
