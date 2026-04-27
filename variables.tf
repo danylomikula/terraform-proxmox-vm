@@ -317,7 +317,7 @@ variable "vms" {
   validation {
     condition = alltrue([
       for key, vm in var.vms :
-      vm.bios == null || contains(["seabios", "ovmf"], vm.bios)
+      vm.bios == null ? true : contains(["seabios", "ovmf"], vm.bios)
     ])
     error_message = "bios must be one of: seabios, ovmf."
   }
@@ -325,7 +325,7 @@ variable "vms" {
   validation {
     condition = alltrue([
       for key, vm in var.vms :
-      vm.scsi_hardware == null || contains(["virtio-scsi-pci", "virtio-scsi-single", "lsi", "lsi53c810", "megasas", "pvscsi"], vm.scsi_hardware)
+      vm.scsi_hardware == null ? true : contains(["virtio-scsi-pci", "virtio-scsi-single", "lsi", "lsi53c810", "megasas", "pvscsi"], vm.scsi_hardware)
     ])
     error_message = "scsi_hardware must be one of: virtio-scsi-pci, virtio-scsi-single, lsi, lsi53c810, megasas, pvscsi."
   }
@@ -333,7 +333,7 @@ variable "vms" {
   validation {
     condition = alltrue([
       for key, vm in var.vms :
-      vm.ssh_key == null || contains(["RSA", "ECDSA", "ED25519"], vm.ssh_key.algorithm)
+      vm.ssh_key == null ? true : contains(["RSA", "ECDSA", "ED25519"], vm.ssh_key.algorithm)
     ])
     error_message = "ssh_key.algorithm must be one of: RSA, ECDSA, ED25519."
   }
@@ -341,7 +341,7 @@ variable "vms" {
   validation {
     condition = alltrue([
       for key, vm in var.vms :
-      vm.ssh_key == null || vm.ssh_key.algorithm != "RSA" || vm.ssh_key.rsa_bits >= 2048
+      vm.ssh_key == null ? true : (vm.ssh_key.algorithm != "RSA" || vm.ssh_key.rsa_bits >= 2048)
     ])
     error_message = "ssh_key.rsa_bits must be at least 2048."
   }
@@ -349,7 +349,7 @@ variable "vms" {
   validation {
     condition = alltrue([
       for key, vm in var.vms :
-      vm.ssh_key == null || vm.ssh_key.algorithm != "ECDSA" || contains(["P224", "P256", "P384", "P521"], vm.ssh_key.ecdsa_curve)
+      vm.ssh_key == null ? true : (vm.ssh_key.algorithm != "ECDSA" || contains(["P224", "P256", "P384", "P521"], vm.ssh_key.ecdsa_curve))
     ])
     error_message = "ssh_key.ecdsa_curve must be one of: P224, P256, P384, P521."
   }
@@ -357,7 +357,7 @@ variable "vms" {
   validation {
     condition = alltrue([
       for key, vm in var.vms :
-      vm.initialization == null || !(
+      vm.initialization == null ? true : !(
         vm.initialization.user_account != null &&
         (vm.initialization.user_data_file != null || vm.initialization.user_data_content != null)
       )
@@ -368,7 +368,7 @@ variable "vms" {
   validation {
     condition = alltrue([
       for key, vm in var.vms :
-      vm.initialization == null || !(
+      vm.initialization == null ? true : !(
         length(vm.initialization.ip_config) > 0 &&
         (vm.initialization.network_data_file != null || vm.initialization.network_data_content != null)
       )
@@ -379,9 +379,10 @@ variable "vms" {
   validation {
     condition = alltrue([
       for key, vm in var.vms :
-      vm.initialization == null ||
-      vm.initialization.file_format == null ||
-      contains(["qcow2", "raw", "vmdk"], vm.initialization.file_format)
+      vm.initialization == null ? true : (
+        vm.initialization.file_format == null ? true :
+        contains(["qcow2", "raw", "vmdk"], vm.initialization.file_format)
+      )
     ])
     error_message = "initialization.file_format must be one of: qcow2, raw, vmdk."
   }
@@ -438,7 +439,7 @@ variable "common_bios" {
   default     = null
 
   validation {
-    condition     = var.common_bios == null || contains(["seabios", "ovmf"], var.common_bios)
+    condition     = var.common_bios == null ? true : contains(["seabios", "ovmf"], var.common_bios)
     error_message = "common_bios must be one of: seabios, ovmf."
   }
 }
