@@ -449,7 +449,7 @@ The VM disk is decoupled from the image after first boot — Terraform destroys 
 | ---- | ------- |
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5.0 |
 | <a name="requirement_local"></a> [local](#requirement\_local) | >= 2.4.0 |
-| <a name="requirement_proxmox"></a> [proxmox](#requirement\_proxmox) | >= 0.104.0 |
+| <a name="requirement_proxmox"></a> [proxmox](#requirement\_proxmox) | >= 0.105.0 |
 | <a name="requirement_tls"></a> [tls](#requirement\_tls) | >= 4.0.0 |
 
 ## Providers
@@ -457,7 +457,7 @@ The VM disk is decoupled from the image after first boot — Terraform destroys 
 | Name | Version |
 | ---- | ------- |
 | <a name="provider_local"></a> [local](#provider\_local) | >= 2.4.0 |
-| <a name="provider_proxmox"></a> [proxmox](#provider\_proxmox) | >= 0.104.0 |
+| <a name="provider_proxmox"></a> [proxmox](#provider\_proxmox) | >= 0.105.0 |
 | <a name="provider_tls"></a> [tls](#provider\_tls) | >= 4.0.0 |
 
 ## Modules
@@ -492,6 +492,7 @@ No modules.
 | <a name="input_common_node_name"></a> [common\_node\_name](#input\_common\_node\_name) | Default Proxmox node name applied to all VMs. | `string` | `"pve"` | no |
 | <a name="input_common_rng"></a> [common\_rng](#input\_common\_rng) | Default RNG device settings applied when a VM does not define rng. | <pre>object({<br/>    source    = string<br/>    max_bytes = optional(number, 1024)<br/>    period    = optional(number, 1000)<br/>  })</pre> | `null` | no |
 | <a name="input_common_snippet_datastore_id"></a> [common\_snippet\_datastore\_id](#input\_common\_snippet\_datastore\_id) | Default datastore ID for cloud-init snippet files (must support snippets content type). | `string` | `"local"` | no |
+| <a name="input_common_snippet_upload_mode"></a> [common\_snippet\_upload\_mode](#input\_common\_snippet\_upload\_mode) | SSH upload mode for cloud-init snippet files. `stream` pipes through an SSH shell session (uses sudo where needed), `sftp` uploads via the SFTP subsystem (requires direct write permission on the target directory). | `string` | `"stream"` | no |
 | <a name="input_common_tags"></a> [common\_tags](#input\_common\_tags) | Tags applied to all VMs in addition to per-VM tags. | `list(string)` | <pre>[<br/>  "terraform"<br/>]</pre> | no |
 | <a name="input_local_key_directory"></a> [local\_key\_directory](#input\_local\_key\_directory) | Directory where to save SSH key files. Files will be named {vm\_name}.key and {vm\_name}.pub. | `string` | `"."` | no |
 | <a name="input_save_ssh_keys_locally"></a> [save\_ssh\_keys\_locally](#input\_save\_ssh\_keys\_locally) | Whether to save generated SSH private keys to local files. | `bool` | `true` | no |
