@@ -424,6 +424,17 @@ variable "common_snippet_datastore_id" {
   default     = "local"
 }
 
+variable "common_snippet_upload_mode" {
+  description = "SSH upload mode for cloud-init snippet files. `stream` pipes through an SSH shell session (uses sudo where needed), `sftp` uploads via the SFTP subsystem (requires direct write permission on the target directory)."
+  type        = string
+  default     = "stream"
+
+  validation {
+    condition     = contains(["stream", "sftp"], var.common_snippet_upload_mode)
+    error_message = "common_snippet_upload_mode must be one of: stream, sftp."
+  }
+}
+
 variable "common_dns" {
   description = "Default DNS configuration applied to all VMs using inline initialization."
   type = object({

@@ -299,6 +299,7 @@ resource "proxmox_virtual_environment_file" "user_data" {
   node_name    = each.value.node_name
   datastore_id = var.common_snippet_datastore_id
   content_type = "snippets"
+  upload_mode  = var.common_snippet_upload_mode
 
   source_raw {
     # Content is resolved here (not in locals) so that sensitive values
@@ -319,6 +320,7 @@ resource "proxmox_virtual_environment_file" "network_data" {
   node_name    = each.value.node_name
   datastore_id = var.common_snippet_datastore_id
   content_type = "snippets"
+  upload_mode  = var.common_snippet_upload_mode
 
   source_raw {
     data = (
@@ -336,6 +338,7 @@ resource "proxmox_virtual_environment_file" "vendor_data" {
   node_name    = each.value.node_name
   datastore_id = var.common_snippet_datastore_id
   content_type = "snippets"
+  upload_mode  = var.common_snippet_upload_mode
 
   source_raw {
     data      = file(local.vms_config[each.key].initialization.vendor_data_file)
@@ -349,6 +352,7 @@ resource "proxmox_virtual_environment_file" "meta_data" {
   node_name    = each.value.node_name
   datastore_id = var.common_snippet_datastore_id
   content_type = "snippets"
+  upload_mode  = var.common_snippet_upload_mode
 
   source_raw {
     data = (
