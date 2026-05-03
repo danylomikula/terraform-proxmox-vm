@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/danylomikula/terraform-proxmox-vm/compare/v1.0.0...v1.1.0) (2026-05-03)
+
+
+### Features
+
+* support SFTP upload mode for cloud-init snippet files ([#3](https://github.com/danylomikula/terraform-proxmox-vm/issues/3)) ([3de6ded](https://github.com/danylomikula/terraform-proxmox-vm/commit/3de6ded6a6b27c254daac4037dc433829e749359))
+
 ## [1.0.0](https://github.com/danylomikula/terraform-proxmox-vm/compare/v1.0.0...v1.0.0) (2026-04-27)
 
 
