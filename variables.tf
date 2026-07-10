@@ -46,8 +46,9 @@ variable "vms" {
       type    = optional(string, "virtio")
       timeout = optional(string, "15m")
       wait_for_ip = optional(object({
-        ipv4 = optional(bool, false)
-        ipv6 = optional(bool, false)
+        disabled = optional(bool, false)
+        ipv4     = optional(bool, false)
+        ipv6     = optional(bool, false)
       }))
     }))
 
@@ -91,6 +92,7 @@ variable "vms" {
       replicate         = optional(bool, true)
       serial            = optional(string)
       path_in_datastore = optional(string)
+      queues            = optional(number)
       speed = optional(object({
         iops_read            = optional(number)
         iops_read_burstable  = optional(number)
@@ -386,6 +388,16 @@ variable "vms" {
     ])
     error_message = "initialization.file_format must be one of: qcow2, raw, vmdk."
   }
+
+  validation {
+    condition = alltrue([
+      for key, vm in var.vms : alltrue([
+        for disk in vm.disks :
+        disk.queues == null ? true : disk.queues >= 2
+      ])
+    ])
+    error_message = "disks[*].queues must be 2 or greater."
+  }
 }
 
 variable "save_ssh_keys_locally" {
@@ -480,8 +492,9 @@ variable "common_agent" {
     type    = optional(string)
     timeout = optional(string)
     wait_for_ip = optional(object({
-      ipv4 = optional(bool, false)
-      ipv6 = optional(bool, false)
+      disabled = optional(bool, false)
+      ipv4     = optional(bool, false)
+      ipv6     = optional(bool, false)
     }))
   })
   default = null
