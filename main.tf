@@ -435,8 +435,9 @@ resource "proxmox_virtual_environment_vm" "this" {
       dynamic "wait_for_ip" {
         for_each = agent.value.wait_for_ip != null ? [agent.value.wait_for_ip] : []
         content {
-          ipv4 = wait_for_ip.value.ipv4
-          ipv6 = wait_for_ip.value.ipv6
+          disabled = wait_for_ip.value.disabled
+          ipv4     = wait_for_ip.value.ipv4
+          ipv6     = wait_for_ip.value.ipv6
         }
       }
     }
@@ -484,6 +485,7 @@ resource "proxmox_virtual_environment_vm" "this" {
       replicate         = disk.value.replicate
       serial            = disk.value.serial
       path_in_datastore = disk.value.path_in_datastore
+      queues            = disk.value.queues
 
       dynamic "speed" {
         for_each = disk.value.speed != null ? [disk.value.speed] : []
