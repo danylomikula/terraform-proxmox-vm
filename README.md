@@ -24,7 +24,7 @@ Terraform module for managing Proxmox VE virtual machines with broad `bpg/proxmo
 ```hcl
 module "vm" {
   source  = "danylomikula/vm/proxmox"
-  version = "~> 1.1"
+  version = "~> 2.0"
 
   common_node_name = "pve"
 
